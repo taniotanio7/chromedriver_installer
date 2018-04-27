@@ -212,16 +212,19 @@ class Install(install):
 
 
 setup(
-    name='chromedriver_installer',
+    name='new_chromedriver_installer',
     version='0.0.7',
     author='Jonatan Witoszek',
     author_email='jonatanwitoszek@gmail.com',
-    description='Chromedriver New Installer',
+    description='Chromedriver New & Better Installer',
     long_description=open(os.path.join(
         os.path.dirname(__file__), 'README.rst'))
     .read(),
     keywords='chromedriver installer',
-    url='https://github.com/peterhudec/chromedriver_installer',
+    url='https://github.com/taniotanio7/chromedriver_installer',
+    install_requires=[
+        'requests', 'requests-html'
+    ],
     classifiers=[
         'Development Status :: 3 - Alpha',
         'Environment :: Web Environment',
