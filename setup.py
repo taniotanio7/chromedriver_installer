@@ -14,11 +14,6 @@ try:
 except ImportError:
     import urllib as request
 
-# Better packages
-import requests
-# from lxml import html
-from parsel import Selector
-# from bs4 import BeautifulSoup
 from requests_html import HTMLSession
 from urllib.parse import urlparse, parse_qs
 
