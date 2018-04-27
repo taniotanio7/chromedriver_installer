@@ -217,7 +217,7 @@ setup(
     .read(),
     keywords='chromedriver installer',
     url='https://github.com/taniotanio7/chromedriver_installer',
-    install_requires=[
+    setup_requires=[
         'requests', 'requests-html'
     ],
     classifiers=[
