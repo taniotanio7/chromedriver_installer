@@ -54,11 +54,6 @@ def get_chromedriver_version():
     ahref = page.html.xpath("""//*[@id="sites-canvas-main-content"]/table/tbody/tr/td/div/h2/b/a""")[0]
     url = ahref.attrs['href']
     version = parse_qs(urlparse(url).query)['path'][0][:-1]
-    # page = requests.get(CHROMEDRIVER_INFO_URL)
-    # sel = Selector(text=page.text)
-    # ahref_string = sel.xpath("""//*[@id="sites-canvas-main-content"]/table/tbody/tr/td/div/h2/b/a""").extract()[0]
-    # ahref = BeautifulSoup(ahref_string, 'html.parser').b
-    # match = CROMEDRIVER_LATEST_VERSION_PATTERN.search(str(content))
     if version:
         return version
     else:
