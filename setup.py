@@ -14,6 +14,18 @@ try:
 except ImportError:
     import urllib as request
 
+# Better packages
+import requests
+# from lxml import html
+from parsel import Selector
+# from bs4 import BeautifulSoup
+from requests_html import HTMLSession
+from urllib.parse import urlparse, parse_qs
+
+
+REQUIRES = [
+    'requests', 'lxml', 'beautifulsoup4'
+]
 
 CHROMEDRIVER_INFO_URL = (
     'https://sites.google.com/a/chromium.org/chromedriver/downloads'
@@ -37,14 +49,20 @@ def get_chromedriver_version():
     """Retrieves the most recent chromedriver version."""
     global chromedriver_version
 
-    response = request.urlopen(CHROMEDRIVER_INFO_URL)
-    content = response.read()
-    match = CROMEDRIVER_LATEST_VERSION_PATTERN.search(str(content))
-    if match:
-        return match.group(1)
+    session = HTMLSession()
+    page = session.get(CHROMEDRIVER_INFO_URL)
+    ahref = page.html.xpath("""//*[@id="sites-canvas-main-content"]/table/tbody/tr/td/div/h2/b/a""")[0]
+    url = ahref.attrs['href']
+    version = parse_qs(urlparse(url).query)['path'][0][:-1]
+    # page = requests.get(CHROMEDRIVER_INFO_URL)
+    # sel = Selector(text=page.text)
+    # ahref_string = sel.xpath("""//*[@id="sites-canvas-main-content"]/table/tbody/tr/td/div/h2/b/a""").extract()[0]
+    # ahref = BeautifulSoup(ahref_string, 'html.parser').b
+    # match = CROMEDRIVER_LATEST_VERSION_PATTERN.search(str(content))
+    if version:
+        return version
     else:
-        raise Exception('Unable to get latest chromedriver version from {0}'
-                        .format(CHROMEDRIVER_INFO_URL))
+        raise("Can't find current ChromeDriver version")
 
 
 class BuildScripts(build_scripts):
@@ -192,10 +210,10 @@ class Install(install):
 
 setup(
     name='chromedriver_installer',
-    version='0.0.6',
-    author='Peter Hudec',
-    author_email='peterhudec@peterhudec.com',
-    description='Chromedriver Installer',
+    version='0.0.7',
+    author='Jonatan Witoszek',
+    author_email='jonatanwitoszek@gmail.com',
+    description='Chromedriver New Installer',
     long_description=open(os.path.join(os.path.dirname(__file__), 'README.rst'))
         .read(),
     keywords='chromedriver installer',
