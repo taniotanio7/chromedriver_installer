@@ -51,13 +51,21 @@ def get_chromedriver_version():
 
     session = HTMLSession()
     page = session.get(CHROMEDRIVER_INFO_URL)
-    ahref = page.html.xpath("""//*[@id="sites-canvas-main-content"]/table/tbody/tr/td/div/h2/b/a""")[0]
+    # Todo: Using xpath might not be the best idea to find a link...
+    ahref = page.html.xpath(
+        """//*[@id="sites-canvas-main-content"]/table/tbody/tr/td/div/h2/b/a""")[0]
     url = ahref.attrs['href']
+    # Reads whole url, find query string and cleanup
     version = parse_qs(urlparse(url).query)['path'][0][:-1]
     if version:
+        chromedriver_version = version  # Todo: using global variables is far from perfect
         return version
     else:
         raise("Can't find current ChromeDriver version")
+
+#  ============
+#  REST OF THE ORIGINAL CODE
+#  ============
 
 
 class BuildScripts(build_scripts):
@@ -92,7 +100,7 @@ class BuildScripts(build_scripts):
             sys.stdout.write('\r')
             sys.stdout.write("{0} [{1}]".format(download_report_template,
                                                 percent_downloaded))
-            download_ok =  percent_downloaded == '100%'
+            download_ok = percent_downloaded == '100%'
             if download_ok:
                 sys.stdout.write(' OK')
             sys.stdout.flush()
@@ -209,8 +217,9 @@ setup(
     author='Jonatan Witoszek',
     author_email='jonatanwitoszek@gmail.com',
     description='Chromedriver New Installer',
-    long_description=open(os.path.join(os.path.dirname(__file__), 'README.rst'))
-        .read(),
+    long_description=open(os.path.join(
+        os.path.dirname(__file__), 'README.rst'))
+    .read(),
     keywords='chromedriver installer',
     url='https://github.com/peterhudec/chromedriver_installer',
     classifiers=[
