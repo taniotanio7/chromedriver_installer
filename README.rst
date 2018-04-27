@@ -1,5 +1,8 @@
 ChromeDriver Installer for Python
 =================================
+
+**Rewritten using requests and requests_html**
+
 .. image:: https://travis-ci.org/peterhudec/chromedriver_installer.svg?branch=master
     :target: https://travis-ci.org/peterhudec/chromedriver_installer
 
@@ -107,3 +110,10 @@ You need `tox <https://testrun.org/tox/latest/>`__ to run the tests.
     (e)$ git clone https://github.com/peterhudec/chromedriver_installer.git
     (e)$ pip install -r requirements.txt
     (e)$ tox
+
+Acknowledments
+--------------
+
+Fork of: https://github.com/authomatic/chromedriver_installer
+Original author: Pether Hudec (peterhudec@peterhudec.com)
+
